@@ -10,7 +10,7 @@ function [fileName,filePath,fileNamePath,fileSum]=importFile(infoFlag)
         fileName = {fileName};
     end
     fileName=fileName';
-    fileNamePath=fullfile(filePath,fileName)';
+    fileNamePath=fullfile(filePath,fileName);
     fileSum=length(fileName);
     if infoFlag
         fprintf('已导入%d份文件。\n',fileSum);
