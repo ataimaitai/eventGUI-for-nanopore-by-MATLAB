@@ -1,14 +1,17 @@
-function [eventMessage]=extractEvent(signal,start,end_)
+function [eventMessage]=extractEvent(signal,baseline,RoughEventLocations)
     eventMessage=struct();
+    start = RoughEventLocations(:,1);
+    end_  = RoughEventLocations(:,2);
     eventNum=length(start);
     if eventNum
         for i=1:eventNum
             eventMessage.data{i}=signal(start(i):end_(i));
             eventMessage.idx{i}=(start(i):end_(i))';
-            eventMessage.dwellPoint(i)=length(eventMessage.idx{i});
+            eventMessage.dwellPoint(i)=RoughEventLocations(i,3);
             eventMessage.min(i)=min(eventMessage.data{i});
             eventMessage.mean(i)=mean(eventMessage.data{i});
-            eventMessage.dwelldeepth(i)=eventMessage.data{i}(1)-eventMessage.mean(i);
+            eventMessage.dwelldeepth(i)=mean(baseline(eventMessage.idx{i}))-eventMessage.mean(i);
         end
     end
+   
 end
